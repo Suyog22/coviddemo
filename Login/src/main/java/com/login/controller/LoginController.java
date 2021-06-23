@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.login.dto.RegisterUser;
 import com.login.dto.User;
 import com.login.service.LoginService;
 
@@ -39,4 +40,11 @@ public class LoginController {
 		return new ResponseEntity<>(jwtToken, HttpStatus.OK);
 	}
 
+	@PostMapping(value="/createuser", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, 
+       	 produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	@ApiOperation(value="Returns newly created user", notes="This service is used to create new user")
+	public ResponseEntity<RegisterUser> createNewUser(@RequestBody RegisterUser registerUser) {
+		RegisterUser createdUser = loginService.createNewUser(registerUser);
+		return new ResponseEntity<RegisterUser>(createdUser, HttpStatus.OK);
+	}
 }
