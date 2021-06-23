@@ -45,6 +45,6 @@ public class LoginController {
 	@ApiOperation(value="Returns newly created user", notes="This service is used to create new user")
 	public ResponseEntity<RegisterUser> createNewUser(@RequestBody RegisterUser registerUser) {
 		RegisterUser createdUser = loginService.createNewUser(registerUser);
-		return new ResponseEntity<RegisterUser>(createdUser, HttpStatus.OK);
+		return new ResponseEntity<>(createdUser, HttpStatus.OK);
 	}
 }
