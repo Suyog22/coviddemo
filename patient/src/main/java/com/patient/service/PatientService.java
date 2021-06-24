@@ -6,9 +6,9 @@ import com.patient.dto.Patients;
 
 public interface PatientService {
 	
-	public List<Patients> getPatients();
+	public List<Patients> getPatients(String jwtToken);
 	
-	public Patients addPatient(Patients patient);
+	public Patients addPatient(String jwtToken,Patients patient);
 	
 	public Patients updatePatient(int id, Patients patient);
 }

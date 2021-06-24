@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,5 +48,12 @@ public class LoginController {
 	public ResponseEntity<RegisterUser> createNewUser(@RequestBody RegisterUser registerUser) {
 		RegisterUser createdUser = loginService.createNewUser(registerUser);
 		return new ResponseEntity<>(createdUser, HttpStatus.OK);
+	}
+	
+	@GetMapping(value="/token/validate",produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public ResponseEntity<Boolean> isTokenValid(@RequestHeader("Authorization") String jwtToken) {
+		jwtToken = jwtToken.substring(jwtToken.indexOf(' '));
+		boolean isTokenValid = loginService.isTokenValid(jwtToken);
+		return new ResponseEntity<>(isTokenValid,HttpStatus.OK);
 	}
 }

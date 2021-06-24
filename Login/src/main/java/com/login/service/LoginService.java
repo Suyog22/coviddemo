@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.login.dto.RegisterUser;
@@ -24,6 +25,9 @@ public class LoginService {
 	@Autowired
 	JwtUtils jwtUtils;
 	
+	@Autowired
+	UserDetailsServiceImpl userDetailsServiceImpl;
+	
 	public String signIn(User user) {
 		
 		try {
@@ -39,5 +43,12 @@ public class LoginService {
 	public RegisterUser createNewUser(RegisterUser registerUser) {
 		 loginRepo.save(LoginUtil.convertRegisterUserToRegisterUserEntity(registerUser));
 		 return registerUser;
+	}
+	
+	
+	public Boolean isTokenValid(String jwtToken) {
+		String userName = jwtUtils.extractUsername(jwtToken);
+		UserDetails user = userDetailsServiceImpl.loadUserByUsername(userName);
+		return jwtUtils.validateToken(jwtToken,user);
 	}
 }
