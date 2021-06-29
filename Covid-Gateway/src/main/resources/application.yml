@@ -1,0 +1,22 @@
+server:
+   port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: loginservice
+          uri: lb://LOGINSERVICE
+          predicates:
+            - Path=/user/**
+        - id: patientservice
+          uri: lb://PATIENTSERVICE
+          predicates:
+            - Path=/patient/**
+
+eureka:
+   client:
+      register-with-eureka: true
+      fetch-registry: true

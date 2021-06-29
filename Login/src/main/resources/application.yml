@@ -22,3 +22,16 @@ eureka:
       fetch-registry: true
    instance:
       hostname: localhost
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"    
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      circuitbreakers:
+         enabled: true
+      show-details: always

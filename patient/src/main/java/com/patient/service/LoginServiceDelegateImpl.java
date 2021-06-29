@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @Service
 public class LoginServiceDelegateImpl implements LoginServiceDelegate {
 	
@@ -16,6 +18,7 @@ public class LoginServiceDelegateImpl implements LoginServiceDelegate {
 	RestTemplate restTemplate;
 
 	@Override
+	@CircuitBreaker(name = "AUTH_TOKEN_VALIDATION", fallbackMethod = "fallbackForValidateToken")
 	public boolean validateToken(String jwtToken) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Authorization",jwtToken);
@@ -24,6 +27,11 @@ public class LoginServiceDelegateImpl implements LoginServiceDelegate {
 													HttpMethod.GET,
 													request, Boolean.class);
 		return validateTokenRes.getBody();
+	}
+	
+	public boolean fallbackForValidateToken(String jwtToken,Throwable throwable) {
+		System.out.println("In fallback method");
+		return false;
 	}
 	
 	@Bean()
