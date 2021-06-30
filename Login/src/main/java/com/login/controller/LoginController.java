@@ -54,6 +54,7 @@ public class LoginController {
 	public ResponseEntity<Boolean> isTokenValid(@RequestHeader("Authorization") String jwtToken) {
 		jwtToken = jwtToken.substring(jwtToken.indexOf(' '));
 		boolean isTokenValid = loginService.isTokenValid(jwtToken);
-		return new ResponseEntity<>(isTokenValid,HttpStatus.OK);
+		return isTokenValid ? new ResponseEntity<>(isTokenValid,HttpStatus.OK) :
+			new ResponseEntity<>(isTokenValid, HttpStatus.FORBIDDEN);
 	}
 }

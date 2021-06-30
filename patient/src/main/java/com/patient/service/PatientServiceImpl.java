@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.patient.dto.Patients;
 import com.patient.entity.PatientEntity;
+import com.patient.exception.InvalidJsonToken;
 import com.patient.repo.PatientsRepo;
 import com.patient.util.PatientsUtil;
 
@@ -30,7 +31,7 @@ public class PatientServiceImpl implements PatientService {
 			});
 			return patientList;
 		}
-		return null;
+		throw new InvalidJsonToken();
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class PatientServiceImpl implements PatientService {
 			PatientEntity patientEntity = patientsRepo.save(PatientsUtil.convertPatientToPatientEntity(patient));
 			return PatientsUtil.convertPatientEntityToPatient(patientEntity);
 		}
-		return null;
+		throw new InvalidJsonToken();
 	}
 
 	@Override

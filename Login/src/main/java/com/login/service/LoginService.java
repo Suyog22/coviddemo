@@ -33,11 +33,10 @@ public class LoginService {
 		try {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword()));
+			return jwtUtils.generateToken(user.getUserName());
 		} catch(BadCredentialsException e) {
 			throw new BadCredentialsException(user.getUserName());
 		}
-
-		return jwtUtils.generateToken(user.getUserName());
 	}
 
 	public RegisterUser createNewUser(RegisterUser registerUser) {
