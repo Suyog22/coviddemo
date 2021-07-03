@@ -10,5 +10,5 @@ public interface PatientService {
 	
 	public Patients addPatient(String jwtToken,Patients patient);
 	
-	public Patients updatePatient(int id, Patients patient);
+	public Patients updatePatient(int id, Patients patient, String jwtToken);
 }

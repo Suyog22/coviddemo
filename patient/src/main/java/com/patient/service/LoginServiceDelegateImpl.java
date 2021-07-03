@@ -1,5 +1,7 @@
 package com.patient.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
@@ -16,11 +18,13 @@ public class LoginServiceDelegateImpl implements LoginServiceDelegate {
 	
 	@Autowired
 	RestTemplate restTemplate;
+	
+	Logger logger = LoggerFactory.getLogger(LoginServiceDelegateImpl.class);
 
 	@Override
 	@CircuitBreaker(name = "AUTH_TOKEN_VALIDATION", fallbackMethod = "fallbackForValidateToken")
 	public boolean validateToken(String jwtToken) {
-		HttpHeaders headers = new HttpHeaders();
+		var headers = new HttpHeaders();
 		headers.set("Authorization",jwtToken);
 		HttpEntity<?> request = new HttpEntity<>(headers);
 		ResponseEntity<Boolean> validateTokenRes =  this.restTemplate.exchange("http://localhost:7000/user/token/validate",
@@ -30,7 +34,8 @@ public class LoginServiceDelegateImpl implements LoginServiceDelegate {
 	}
 	
 	public boolean fallbackForValidateToken(String jwtToken,Throwable throwable) {
-		System.out.println("In fallback method");
+		logger.info("Invalid token");
+		logger.info(jwtToken);
 		return false;
 	}
 	

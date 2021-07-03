@@ -5,6 +5,8 @@ import com.login.entity.RegisterUserEntity;
 
 public class LoginUtil {
 	
+	private LoginUtil() { }
+
 	public static RegisterUserEntity convertRegisterUserToRegisterUserEntity(RegisterUser registerUser) {
 		return new RegisterUserEntity(
 				registerUser.getFirstName(),

@@ -15,4 +15,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<Object> handleJWTTokenError(RuntimeException exception, WebRequest request) {
 		return handleExceptionInternal(exception, exception.toString(), new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
 	}
+	
+	@ExceptionHandler(value= {InvalidPatientId.class})
+	public ResponseEntity<Object> handleInvalidPatientIdError(RuntimeException exception, WebRequest request) {
+		return handleExceptionInternal(exception, exception.toString(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+	}
 }
