@@ -54,8 +54,21 @@ public class PatientServiceImpl implements PatientService {
 				patientEntity.setAge(patient.getAge());
 				patientEntity.setHrctScore(patient.getHrctScore());
 				patientEntity.setName(patient.getName());
-				PatientEntity updatedPatientEntity = patientsRepo.save(patientEntity);
+				var updatedPatientEntity = patientsRepo.save(patientEntity);
 				return PatientsUtil.convertPatientEntityToPatient(updatedPatientEntity);
+			}
+			throw new InvalidPatientId();
+		}
+		throw new InvalidJsonToken();
+	}
+	
+	@Override
+	public Boolean deletePatient(int id, String jwtToken) {
+		if(loginServiceDelegate.validateToken(jwtToken)) {
+			Optional<PatientEntity> opPatientEntity = patientsRepo.findById(id);
+			if(opPatientEntity.isPresent()) {
+				patientsRepo.deleteById(id);
+				return true;
 			}
 			throw new InvalidPatientId();
 		}

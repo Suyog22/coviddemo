@@ -11,4 +11,6 @@ public interface PatientService {
 	public Patients addPatient(String jwtToken,Patients patient);
 	
 	public Patients updatePatient(int id, Patients patient, String jwtToken);
+	
+	public Boolean deletePatient(int id, String jwtToken);
 }
