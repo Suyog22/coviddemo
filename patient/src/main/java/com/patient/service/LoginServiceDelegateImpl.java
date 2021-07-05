@@ -34,8 +34,7 @@ public class LoginServiceDelegateImpl implements LoginServiceDelegate {
 	}
 	
 	public boolean fallbackForValidateToken(String jwtToken,Throwable throwable) {
-		logger.info("Invalid token");
-		logger.info(jwtToken);
+		logger.warn("Invalid token {}", jwtToken, throwable);
 		return false;
 	}
 	
