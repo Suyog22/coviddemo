@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	LoginRepo loginRepo;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username)  {
 		List<RegisterUserEntity> registredUserList = loginRepo.findByUserName(username);
 		if(registredUserList.isEmpty()) {
 			throw new UsernameNotFoundException(username);

@@ -1,7 +1,6 @@
 package com.patient.config;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
  
 import org.springframework.context.annotation.Bean;
@@ -12,7 +11,6 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.BasicAuth;
 import springfox.documentation.service.Contact;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.service.SecurityScheme;
@@ -24,8 +22,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-	
-	private static final String BASIC_AUTH = "basicAuth";
+
     private static final String BEARER_AUTH = "Bearer";
 
 	@Bean

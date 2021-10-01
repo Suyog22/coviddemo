@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value="/patient")
 public class PatientController {
 	
@@ -41,6 +41,7 @@ public class PatientController {
 	@GetMapping(value="/",produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@ApiOperation(value="Returns list of patient", notes="This service is used to display list of patient")
 	public ResponseEntity<List<Patients>> getPatients(@RequestHeader("Authorization") String jwtToken) {
+		System.out.println("In get patient");
 		return new ResponseEntity<>(patientService.getPatients(jwtToken),HttpStatus.OK);
 	}
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.login.dto.RegisterUser;
+import com.login.dto.SignInRes;
 import com.login.dto.User;
 import com.login.service.LoginService;
 
@@ -23,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value="/user")
 public class LoginController {
 	
@@ -37,9 +38,13 @@ public class LoginController {
 	@PostMapping(value="/authenticate", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, 
 	        produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	@ApiOperation(value="Returns auth token", notes="This service returns the auth token")
-	public ResponseEntity<String> signIn(@RequestBody User user) {
-		String jwtToken = loginService.signIn(user);
-		return new ResponseEntity<>(jwtToken, HttpStatus.OK);
+	public ResponseEntity<SignInRes> signIn(@RequestBody User user) {
+		if(loginService.signIn(user) != null) {
+			String jwtToken = loginService.signIn(user);
+			var signInRes = new SignInRes(user,jwtToken);
+			return new ResponseEntity<>(signInRes, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
 
 	@PostMapping(value="/createuser", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, 
